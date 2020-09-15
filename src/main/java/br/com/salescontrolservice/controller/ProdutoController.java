@@ -3,6 +3,8 @@ package br.com.salescontrolservice.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +19,12 @@ import org.springframework.http.HttpStatus;
 import br.com.salescontrolservice.domain.dto.ProdutoDto;
 import br.com.salescontrolservice.domain.entity.Produto;
 import br.com.salescontrolservice.exception.BusinessException;
+import br.com.salescontrolservice.exception.ProdutoNotFoundException;
 import br.com.salescontrolservice.service.ProdutoService;
 
 @RequestMapping("/produto")
 @RestController
+@Valid
 public class ProdutoController {
 	
     @Autowired
@@ -29,15 +33,15 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
     
-	@PostMapping
+	@PostMapping(consumes = { "application/json" },  produces = { "application/json" })
 	@ResponseStatus(HttpStatus.CREATED)
 	public void create(@RequestBody ProdutoDto produtoDto) throws BusinessException {
 		produtoService.cadastrarProduto(convertToEntity(produtoDto));
 	}
 	
-	@GetMapping
+	@GetMapping(value = "{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ProdutoDto findById(@PathVariable final Long id) {
+	public ProdutoDto findById(@PathVariable final Long id) throws ProdutoNotFoundException {
 		return convertToDto(produtoService.findById(id));	
 	}
 	
