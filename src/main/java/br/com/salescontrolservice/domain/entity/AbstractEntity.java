@@ -21,4 +21,12 @@ public abstract class AbstractEntity <I extends Serializable>{
 	@Column(name = "ID")
 	protected I id;
 
+	public I getId() {
+		return id;
+	}
+
+	public void setId(I id) {
+		this.id = id;
+	}
+	
 }
