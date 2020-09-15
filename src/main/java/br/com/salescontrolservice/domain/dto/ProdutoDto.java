@@ -1,9 +1,4 @@
-package br.com.salescontrolservice.domain.entity;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+package br.com.salescontrolservice.domain.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,27 +12,18 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Entity
-@Table(name="product")
-public class Produto extends AbstractEntity<Long>{
+public class ProdutoDto {
 
-	@Column(name = "desc_product")
+	private Long id;
 	private String descricao;
-	
-	@NotNull(message = "O valor da peca deve ser preenchido")
-	@Column(name = "value_unitary")
 	private Double valorUnitario;
-	
-	@Column(name = "active")
 	private boolean ativo;
 	
-	public Produto() {
-		
+	public Long getId() {
+		return id;
 	}
-	public Produto(String descricao, double valorUnitario, boolean ativo) {
-		this.descricao = descricao;
-		this.valorUnitario = valorUnitario;
-		this.ativo = ativo;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getDescricao() {
 		return descricao;
@@ -59,5 +45,5 @@ public class Produto extends AbstractEntity<Long>{
 	}
 	
 	
-	
+
 }

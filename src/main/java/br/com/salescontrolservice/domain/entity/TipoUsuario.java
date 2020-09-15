@@ -11,16 +11,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Entity
 @Table(name="user_type")
 public class TipoUsuario extends AbstractEntity<Long>{
 
 	@Column(name = "desc_user_type")
 	private String descricao;
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	
 	
 }

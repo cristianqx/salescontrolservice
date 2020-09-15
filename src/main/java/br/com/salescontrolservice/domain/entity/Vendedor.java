@@ -12,7 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+/*
 @Getter
 @Setter
 @Builder
@@ -31,3 +31,4 @@ public class Vendedor extends AbstractEntity<Long> {
 	@Column(name = "active")
 	private boolean ativo;
 }
+*/
