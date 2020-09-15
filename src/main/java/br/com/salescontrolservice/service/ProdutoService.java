@@ -2,7 +2,6 @@ package br.com.salescontrolservice.service;
 
 import javax.validation.Valid;
 
-import br.com.salescontrolservice.domain.dto.ProdutoDto;
 import br.com.salescontrolservice.domain.entity.Produto;
 
 public interface ProdutoService {

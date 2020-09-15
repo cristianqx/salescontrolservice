@@ -21,6 +21,7 @@ import lombok.Setter;
 @Table(name="product")
 public class Produto extends AbstractEntity<Long>{
 
+	@NotNull(message = "O nome da peca deve ser preenchido")
 	@Column(name = "desc_product")
 	private String descricao;
 	
@@ -28,6 +29,7 @@ public class Produto extends AbstractEntity<Long>{
 	@Column(name = "value_unitary")
 	private Double valorUnitario;
 	
+	@NotNull
 	@Column(name = "active")
 	private boolean ativo;
 	

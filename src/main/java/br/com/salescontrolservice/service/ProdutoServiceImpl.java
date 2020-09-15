@@ -2,17 +2,21 @@ package br.com.salescontrolservice.service;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.salescontrolservice.domain.entity.Produto;
+import br.com.salescontrolservice.repository.ProdutoRepository;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
 
+	@Autowired
+	private ProdutoRepository produtoRepository;
+	
 	@Override
 	public void cadastrarProduto(@Valid Produto produto) {
-		// TODO Auto-generated method stub
-		
+		produtoRepository.save(produto);
 	}
 
 	@Override
