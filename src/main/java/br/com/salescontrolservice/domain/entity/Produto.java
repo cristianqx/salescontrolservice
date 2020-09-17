@@ -5,18 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Entity
 @Table(name="product")
 public class Produto extends AbstractEntity<Long>{
@@ -33,9 +21,7 @@ public class Produto extends AbstractEntity<Long>{
 	@Column(name = "active")
 	private boolean ativo;
 	
-	public Produto() {
-		
-	}
+	
 	public Produto(String descricao, double valorUnitario, boolean ativo) {
 		this.descricao = descricao;
 		this.valorUnitario = valorUnitario;

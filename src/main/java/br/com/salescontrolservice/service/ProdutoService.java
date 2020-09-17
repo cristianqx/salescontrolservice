@@ -9,5 +9,5 @@ public interface ProdutoService {
 
 	void cadastrarProduto(@Valid Produto produto);
 	
-	Produto findById(final Long id) throws ProdutoNotFoundException ;
+	Produto findById(final Long id) throws ProdutoNotFoundException;
 }
