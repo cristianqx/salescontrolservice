@@ -1,7 +1,5 @@
 package br.com.salescontrolservice.controller;
 
-import java.util.Objects;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;

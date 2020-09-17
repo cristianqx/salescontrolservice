@@ -21,7 +21,6 @@ public class Produto extends AbstractEntity<Long>{
 	@Column(name = "active")
 	private boolean ativo;
 	
-	
 	public Produto(String descricao, double valorUnitario, boolean ativo) {
 		this.descricao = descricao;
 		this.valorUnitario = valorUnitario;
