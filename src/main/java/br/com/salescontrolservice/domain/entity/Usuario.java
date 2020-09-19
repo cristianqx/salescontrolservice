@@ -50,9 +50,9 @@ public class Usuario extends AbstractEntity<Long>{
 	@ManyToOne
 	private TipoUsuario perfil;
 	
-	@Column(name = "active")
+	@Column(name = "status")
 	@NotNull
-	private boolean ativo;
+	private Short status;
 
 	public String getNome() {
 		return nome;
@@ -102,13 +102,10 @@ public class Usuario extends AbstractEntity<Long>{
 		this.perfil = perfil;
 	}
 
-	public boolean isAtivo() {
-		return ativo;
+	public Short getStatus() {
+		return status;
 	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public void setStatus(Short status) {
+		this.status = status;
 	}
-	
-	
 }

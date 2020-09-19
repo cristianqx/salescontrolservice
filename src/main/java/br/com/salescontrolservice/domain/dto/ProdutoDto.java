@@ -1,23 +1,15 @@
 package br.com.salescontrolservice.domain.dto;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.Convert;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
+import br.com.salescontrolservice.enumeration.StatusEnum;
+
 public class ProdutoDto {
 
 	private Long id;
 	private String descricao;
 	private Double valorUnitario;
-	private boolean ativo;
+	private StatusEnum status;
 	
 	public Long getId() {
 		return id;
@@ -37,13 +29,10 @@ public class ProdutoDto {
 	public void setValorUnitario(Double valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
-	public boolean isAtivo() {
-		return ativo;
+	public StatusEnum getStatus() {
+		return status;
 	}
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public void setStatus(StatusEnum status) {
+		this.status = status;
 	}
-	
-	
-
 }

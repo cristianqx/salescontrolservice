@@ -1,9 +1,13 @@
 package br.com.salescontrolservice.domain.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import br.com.salescontrolservice.domain.converter.StatusConverter;
+import br.com.salescontrolservice.enumeration.StatusEnum;
 
 @Entity
 @Table(name="product")
@@ -17,9 +21,9 @@ public class Produto extends AbstractEntity<Long>{
 	@Column(name = "value_unitary")
 	private Double valorUnitario;
 	
-	@NotNull
-	@Column(name = "active")
-	private boolean ativo;
+	@Column(name = "status")
+	@Convert(converter = StatusConverter.class)
+	private StatusEnum status;
 	
 	public String getDescricao() {
 		return descricao;
@@ -33,13 +37,11 @@ public class Produto extends AbstractEntity<Long>{
 	public void setValorUnitario(Double valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
-	public boolean isAtivo() {
-		return ativo;
+	public StatusEnum  getStatus() {
+		return status;
 	}
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public void setStatus(StatusEnum status) {
+		this.status = status;
 	}
-	
-	
 	
 }
