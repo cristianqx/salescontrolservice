@@ -1,5 +1,7 @@
 package br.com.salescontrolservice.service;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import br.com.salescontrolservice.domain.dto.ProdutoDto;
@@ -15,4 +17,6 @@ public interface ProdutoService {
 	void deleteProduto(@Valid Long id) throws BusinessException;
 	
 	Produto findById(final Long id) throws BusinessException;
+	
+	Iterable<Produto> findAll();
 }

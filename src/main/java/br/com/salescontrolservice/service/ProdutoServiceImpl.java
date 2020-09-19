@@ -1,5 +1,6 @@
 package br.com.salescontrolservice.service;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.transaction.Transactional;
@@ -57,6 +58,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtoRepository.save(entity);
 	}
 	
+	@Override
+	public Iterable<Produto> findAll() {
+		return produtoRepository.findAll();		
+	}
+	
 	private void prepareCreate(final Produto entity) {
 		entity.setStatus(StatusEnum.ATIVO);
 	}
@@ -65,5 +71,5 @@ public class ProdutoServiceImpl implements ProdutoService {
 		entity.setId(id);
 		entity.setStatus(old.getStatus());
 	}
-	
+
 }

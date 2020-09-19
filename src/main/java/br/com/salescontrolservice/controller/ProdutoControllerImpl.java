@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import br.com.salescontrolservice.domain.dto.ProdutoDto;
 import br.com.salescontrolservice.exception.BusinessException;
 import br.com.salescontrolservice.service.ProdutoService;
+import io.swagger.annotations.ApiOperation;
 
 @RequestMapping("/produto")
 @RestController
@@ -27,6 +28,7 @@ public class ProdutoControllerImpl extends AbstractController {
     @Autowired
     private ProdutoService produtoService;
     
+    @ApiOperation(value = "Cadastra um produto")
 	@PostMapping(consumes = { "application/json" },  produces = { "application/json" })
 	@ResponseStatus(HttpStatus.CREATED)
 	public void create(@RequestBody ProdutoDto produtoDto) throws BusinessException {
@@ -34,22 +36,33 @@ public class ProdutoControllerImpl extends AbstractController {
 	}
 	
     
+    @ApiOperation(value = "Atualiza um produto específico")
 	@PutMapping(value = "{id}", consumes = { "application/json" },  produces = { "application/json" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@RequestBody ProdutoDto produtoDto, @PathVariable Long id) throws BusinessException {
 		produtoService.atualizarProduto(produtoDto, id);
 	}
 	
+    @ApiOperation(value = "Retorna dados de um produto pelo id")
 	@GetMapping(value = "{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ProdutoDto findById(@PathVariable final Long id) throws BusinessException {
 		return convertToDTO(produtoService.findById(id), ProdutoDto.class);	
 	}
 	
+    @ApiOperation(value = "Deleta um um produto")
 	@DeleteMapping(value = "{id}", consumes = { "application/json" },  produces = { "application/json" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) throws BusinessException {
 		produtoService.deleteProduto(id);
 	}
+    
+    @ApiOperation(value = "Retorna uma lista de produtos")
+	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
+	public Iterable<ProdutoDto> findAll() throws BusinessException {
+		return convertToDTO(produtoService.findAll(), ProdutoDto.class);
+	}
+    
 }
 
