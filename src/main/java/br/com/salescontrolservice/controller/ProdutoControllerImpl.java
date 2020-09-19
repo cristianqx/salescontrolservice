@@ -20,7 +20,7 @@ import br.com.salescontrolservice.service.ProdutoService;
 @RequestMapping("/produto")
 @RestController
 @Valid
-public class ProdutoControllerImpl extends AbstractProdutoController {
+public class ProdutoControllerImpl extends AbstractController {
 	
     
     @Autowired
@@ -29,13 +29,13 @@ public class ProdutoControllerImpl extends AbstractProdutoController {
 	@PostMapping(consumes = { "application/json" },  produces = { "application/json" })
 	@ResponseStatus(HttpStatus.CREATED)
 	public void create(@RequestBody ProdutoDto produtoDto) throws BusinessException {
-		produtoService.cadastrarProduto(convertToEntity(produtoDto));
+		produtoService.cadastrarProduto(produtoDto);
 	}
 	
 	@GetMapping(value = "{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ProdutoDto findById(@PathVariable final Long id) throws ProdutoNotFoundException {
-		return convertToDto(produtoService.findById(id));	
+		return convertToDTO(produtoService.findById(id), ProdutoDto.class);	
 	}
 	
 }
