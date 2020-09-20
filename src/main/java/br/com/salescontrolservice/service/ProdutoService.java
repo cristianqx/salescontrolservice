@@ -1,7 +1,5 @@
 package br.com.salescontrolservice.service;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import br.com.salescontrolservice.domain.dto.ProdutoDto;

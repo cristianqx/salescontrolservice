@@ -1,7 +1,5 @@
 package br.com.salescontrolservice.domain.dto;
 
-import javax.persistence.Convert;
-
 import br.com.salescontrolservice.enumeration.StatusEnum;
 
 public class ProdutoDto {

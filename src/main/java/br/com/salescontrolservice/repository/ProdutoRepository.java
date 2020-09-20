@@ -7,5 +7,5 @@ import br.com.salescontrolservice.domain.entity.Produto;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{
-
+	boolean existsProdutoByDescricao(final String descricao);	
 }
