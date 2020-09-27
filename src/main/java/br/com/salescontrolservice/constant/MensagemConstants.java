@@ -9,7 +9,7 @@ public class MensagemConstants {
 	 * Usuário
 	 */
 	public static final String USUARIO_NAO_ENCONTRADO = "O usuário informado não encontrado.";
-	public static final String USUARIO_JA_CADASTRADO = "O uuário já está cadastrado no sistema.";
+	public static final String USUARIO_JA_CADASTRADO = "O usuário já está cadastrado no sistema.";
 
 	/*
 	 * Produto

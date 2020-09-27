@@ -16,7 +16,7 @@ import br.com.salescontrolservice.exception.ProdutoNotFoundException;
 import br.com.salescontrolservice.repository.ProdutoRepository;
 
 @Service
-public class ProdutoServiceImpl implements ProdutoService {
+public class ProdutoServiceImpl extends AbstractService implements ProdutoService {
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -76,15 +76,4 @@ public class ProdutoServiceImpl implements ProdutoService {
 			throw new ProdutoExistsException();
 		}
 	}
-	
-	public static String capitalize (String str) {
-	    char[] letras = str.toCharArray();
-	    for (int i = 0; i < letras.length; ++i) {
-	        if (i == 0 || !Character.isLetterOrDigit (letras[i-1])) {
-	            letras[i] = Character.toUpperCase (letras[i]);
-	        }
-	    }
-	    return new String (letras);
-	}
-	
 }
