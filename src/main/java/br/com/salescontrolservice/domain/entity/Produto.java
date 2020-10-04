@@ -43,5 +43,4 @@ public class Produto extends AbstractEntity<Long>{
 	public void setStatus(StatusEnum status) {
 		this.status = status;
 	}
-	
 }

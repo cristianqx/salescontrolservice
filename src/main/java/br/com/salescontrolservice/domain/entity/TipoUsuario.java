@@ -18,7 +18,4 @@ public class TipoUsuario extends AbstractEntity<Long>{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	
-	
 }

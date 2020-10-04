@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import br.com.salescontrolservice.enumeration.StatusEnum;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -38,14 +41,13 @@ public class Usuario extends AbstractEntity<Long>{
 	@Size(min = 8, max = 9)
 	private String telefone;
 	
-	@NotNull
-	@NotBlank(message = "O perfil do usuário deve ser preenchido")
+	@NotNull(message = "O perfil do usuário deve ser preenchido")
 	@ManyToOne
 	private TipoUsuario perfil;
 	
 	@Column(name = "status")
 	@NotNull
-	private Short status;
+	private StatusEnum status;
 
 	public String getNome() {
 		return nome;
@@ -95,10 +97,10 @@ public class Usuario extends AbstractEntity<Long>{
 		this.perfil = perfil;
 	}
 
-	public Short getStatus() {
+	public StatusEnum getStatus() {
 		return status;
 	}
-	public void setStatus(Short status) {
+	public void setStatus(StatusEnum status) {
 		this.status = status;
 	}
 }
