@@ -3,6 +3,7 @@ package br.com.salescontrolservice.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/produto")
 @RestController
 @Valid
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProdutoControllerImpl extends AbstractController {
 	
     
@@ -58,7 +60,7 @@ public class ProdutoControllerImpl extends AbstractController {
 	}
     
     @ApiOperation(value = "Retorna uma lista de produtos")
-	@GetMapping
+    @GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public Iterable<ProdutoDto> findAll() throws BusinessException {
 		return convertToDTO(produtoService.findAll(), ProdutoDto.class);
