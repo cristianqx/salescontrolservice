@@ -56,7 +56,7 @@ public class UsuarioServiceImpl extends AbstractService implements UsuarioServic
 
 	@Override
 	public Iterable<Usuario> findAll() {
-		return usuarioRepository.findAll();
+		return usuarioRepository.findAllByOrderByIdDesc();
 	}
 	
 	private void prepareUpdate(final Usuario entity, final Usuario old, final Long id, final UsuarioDto dto) {
