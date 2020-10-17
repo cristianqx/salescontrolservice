@@ -57,7 +57,7 @@ public class ProdutoServiceImpl extends AbstractService implements ProdutoServic
 	
 	@Override
 	public Iterable<Produto> findAll() {
-		return produtoRepository.findAll();		
+		return produtoRepository.findAllByOrderByIdDesc();		
 	}
 	
 	private void prepareCreate(final Produto entity) {
