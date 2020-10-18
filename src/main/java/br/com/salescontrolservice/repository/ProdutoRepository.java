@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import br.com.salescontrolservice.domain.entity.Produto;
 
 @Repository
-public interface ProdutoRepository extends JpaRepository<Produto, Long>{
-	boolean existsProdutoByDescricao(final String descricao);
+public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
+	boolean existsProdutoByDescricaoAndEstabelecimentoId(final String descricao, final Integer idEstabelecimento);
 	
-	Iterable<Produto> findAllByOrderByIdDesc();
+	Iterable<Produto> findAllByEstabelecimentoIdOrderByIdDesc(Integer idEstabelecimento);
 }

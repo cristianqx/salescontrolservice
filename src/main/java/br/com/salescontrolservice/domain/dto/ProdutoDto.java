@@ -1,36 +1,56 @@
 package br.com.salescontrolservice.domain.dto;
 
+import java.util.List;
+
+import br.com.salescontrolservice.domain.entity.Estabelecimento;
 import br.com.salescontrolservice.enumeration.StatusEnum;
 
 public class ProdutoDto {
 
-	private Long id;
+	private Integer id;
 	private String descricao;
-	private Double valorUnitario;
+	private Double valor;
 	private StatusEnum status;
+    private List<Estabelecimento> estabelecimento;
+
 	
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	
+	public void setId(Integer id) {
 		this.id = id;
 	}
+	
 	public String getDescricao() {
 		return descricao;
 	}
+	
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
 	public Double getValorUnitario() {
-		return valorUnitario;
+		return valor;
 	}
+	
 	public void setValorUnitario(Double valorUnitario) {
-		this.valorUnitario = valorUnitario;
+		this.valor = valorUnitario;
 	}
+	
 	public StatusEnum getStatus() {
 		return status;
 	}
+	
 	public void setStatus(StatusEnum status) {
 		this.status = status;
+	}
+
+	public List<Estabelecimento> getEstabelecimento() {
+		return estabelecimento;
+	}
+
+	public void setEstabelecimento(List<Estabelecimento> estabelecimento) {
+		this.estabelecimento = estabelecimento;
 	}
 }

@@ -17,7 +17,7 @@ public class Usuario extends AbstractEntity<Long>{
 
 	@NotNull
 	@NotBlank(message = "O nome do usuário deve ser preenchido")
-	@Column(name = "name")
+	@Column(name = "nome")
 	private String nome;
 	
 	@NotNull
@@ -27,7 +27,7 @@ public class Usuario extends AbstractEntity<Long>{
 	
 	@NotNull
 	@NotBlank(message = "A senha do usuário deve ser preenchida")
-	@Column(name = "password")
+	@Column(name = "senha")
 	private String senha;
 
 	@NotNull

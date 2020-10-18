@@ -3,6 +3,7 @@ package br.com.salescontrolservice.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 
 import br.com.salescontrolservice.domain.dto.ProdutoDto;
+import br.com.salescontrolservice.domain.entity.Produto;
 import br.com.salescontrolservice.exception.BusinessException;
 import br.com.salescontrolservice.service.ProdutoService;
 import io.swagger.annotations.ApiOperation;
@@ -41,29 +43,29 @@ public class ProdutoControllerImpl extends AbstractController {
     @ApiOperation(value = "Atualiza um produto específico")
 	@PutMapping(value = "{id}", consumes = { "application/json" },  produces = { "application/json" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@RequestBody ProdutoDto produtoDto, @PathVariable Long id) throws BusinessException {
+	public void update(@RequestBody ProdutoDto produtoDto, @PathVariable Integer id) throws BusinessException {
 		produtoService.atualizarProduto(produtoDto, id);
 	}
 	
     @ApiOperation(value = "Retorna dados de um produto pelo id")
 	@GetMapping(value = "{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ProdutoDto findById(@PathVariable final Long id) throws BusinessException {
-		return convertToDTO(produtoService.findById(id), ProdutoDto.class);	
+	public Produto findById(@PathVariable final Integer id) throws BusinessException {
+		return produtoService.findById(id);	
 	}
 	
     @ApiOperation(value = "Deleta um um produto")
 	@DeleteMapping(value = "{id}", consumes = { "application/json" },  produces = { "application/json" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable Long id) throws BusinessException {
+	public void delete(@PathVariable Integer id) throws BusinessException {
 		produtoService.deleteProduto(id);
 	}
     
-    @ApiOperation(value = "Retorna uma lista de produtos")
-    @GetMapping
+    @ApiOperation(value = "Retorna uma lista de produtos de um determinado estabelecimento")
+    @GetMapping(value = "/estabelecimento/{idEstabelecimento}")
 	@ResponseStatus(HttpStatus.OK)
-	public Iterable<ProdutoDto> findAll() throws BusinessException {
-		return convertToDTO(produtoService.findAll(), ProdutoDto.class);
+	public Iterable<Produto> findAll(@PathVariable final Integer idEstabelecimento) throws BusinessException {
+		return (produtoService.findAll(idEstabelecimento));
 	}
     
 }

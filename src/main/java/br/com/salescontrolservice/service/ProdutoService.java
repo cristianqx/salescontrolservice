@@ -10,11 +10,11 @@ public interface ProdutoService {
 
 	void cadastrarProduto(@Valid ProdutoDto produto) throws BusinessException;
 	
-	void atualizarProduto(@Valid ProdutoDto produto, @Valid Long id) throws BusinessException;
+	void atualizarProduto(@Valid ProdutoDto produto, @Valid Integer id) throws BusinessException;
 	
-	void deleteProduto(@Valid Long id) throws BusinessException;
+	void deleteProduto(@Valid Integer id) throws BusinessException;
 	
-	Produto findById(final Long id) throws BusinessException;
+	Produto findById(final Integer id) throws BusinessException;
 	
-	Iterable<Produto> findAll();
+	Iterable<Produto> findAll(final Integer idEstabelecimento);
 }
