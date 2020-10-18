@@ -30,14 +30,14 @@ public class ProdutoDto {
 		this.descricao = descricao;
 	}
 	
-	public Double getValorUnitario() {
+	public Double getValor() {
 		return valor;
 	}
-	
-	public void setValorUnitario(Double valorUnitario) {
-		this.valor = valorUnitario;
+
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
-	
+
 	public StatusEnum getStatus() {
 		return status;
 	}

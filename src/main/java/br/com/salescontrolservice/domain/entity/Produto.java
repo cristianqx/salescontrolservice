@@ -74,7 +74,6 @@ public class Produto implements Serializable {
 		this.status = status;
 	}
 
-	
 	public Double getValor() {
 		return valor;
 	}
@@ -82,7 +81,7 @@ public class Produto implements Serializable {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-	
+
 	public Estabelecimento getEstabelecimento() {
 		return estabelecimento;
 	}
