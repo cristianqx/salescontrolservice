@@ -39,8 +39,10 @@ public class EstabelecimentoServiceImpl extends AbstractService implements Estab
 
 	@Override
 	public void atualizarEstabelecimento(@Valid EstabelecimentoDto dto, @Valid Integer id) throws BusinessException {
-		// TODO Auto-generated method stub
-		
+		Estabelecimento old = estabelecimentoRepository.findById(id).orElseThrow(EstabelecimentoNotFoundException::new);
+		Estabelecimento entity = modelMapper.map(dto, Estabelecimento.class);
+		prepareUpdate(entity, old, id, dto);
+		estabelecimentoRepository.save(entity);
 	}
 
 	@Override
@@ -60,6 +62,12 @@ public class EstabelecimentoServiceImpl extends AbstractService implements Estab
 		if(estabelecimentoRepository.existsEstabelecimentoByNome(dto.getNome())) {
 			throw new EstabelecimentoExistsException();
 		}
+	}
+	
+	private void prepareUpdate(final Estabelecimento entity, final Estabelecimento old, final Integer id, final EstabelecimentoDto dto) {
+		entity.setId(id);
+		entity.setNome(capitalize(dto.getNome()));
+		entity.setStatus(old.getStatus());
 	}
 	
 	private void prepareCreate(final Estabelecimento entity) {
