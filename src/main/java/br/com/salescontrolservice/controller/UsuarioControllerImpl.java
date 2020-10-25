@@ -26,7 +26,6 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsuarioControllerImpl extends AbstractController {
 	
-    
     @Autowired
     private UsuarioService usuarioService;
     

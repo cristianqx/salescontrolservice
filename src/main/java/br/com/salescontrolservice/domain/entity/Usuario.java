@@ -3,6 +3,7 @@ package br.com.salescontrolservice.domain.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -49,6 +50,9 @@ public class Usuario extends AbstractEntity<Long>{
 	@NotNull
 	private StatusEnum status;
 
+	@OneToOne
+	private Estabelecimento estabelecimento;
+	
 	public String getNome() {
 		return nome;
 	}
@@ -102,5 +106,13 @@ public class Usuario extends AbstractEntity<Long>{
 	}
 	public void setStatus(StatusEnum status) {
 		this.status = status;
+	}
+
+	public Estabelecimento getEstabelecimento() {
+		return estabelecimento;
+	}
+
+	public void setEstabelecimento(Estabelecimento estabelecimento) {
+		this.estabelecimento = estabelecimento;
 	}
 }

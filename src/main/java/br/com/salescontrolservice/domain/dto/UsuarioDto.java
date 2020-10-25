@@ -1,5 +1,6 @@
 package br.com.salescontrolservice.domain.dto;
 
+import br.com.salescontrolservice.domain.entity.Estabelecimento;
 import br.com.salescontrolservice.domain.entity.TipoUsuario;
 import br.com.salescontrolservice.enumeration.StatusEnum;
 
@@ -13,6 +14,7 @@ public class UsuarioDto {
 	private String telefone;
 	private TipoUsuario perfil;
 	private StatusEnum status;
+	private Estabelecimento estabelecimento;
 	
 	public Long getId() {
 		return id;
@@ -75,5 +77,13 @@ public class UsuarioDto {
 	
 	public void setStatus(StatusEnum status) {
 		this.status = status;
+	}
+
+	public Estabelecimento getEstabelecimento() {
+		return estabelecimento;
+	}
+
+	public void setEstabelecimento(Estabelecimento estabelecimento) {
+		this.estabelecimento = estabelecimento;
 	}	
 }
