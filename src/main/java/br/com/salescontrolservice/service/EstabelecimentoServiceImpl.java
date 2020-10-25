@@ -33,8 +33,7 @@ public class EstabelecimentoServiceImpl extends AbstractService implements Estab
 
 	@Override
 	public Iterable<Estabelecimento> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return estabelecimentoRepository.findAllByOrderByIdDesc();
 	}
 
 	@Override
@@ -54,8 +53,7 @@ public class EstabelecimentoServiceImpl extends AbstractService implements Estab
 
 	@Override
 	public Estabelecimento findById(Integer id) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		return estabelecimentoRepository.findById(id).orElseThrow(EstabelecimentoNotFoundException::new);
 	}
 
 	private void validateCreate(final EstabelecimentoDto dto) throws BusinessException {
