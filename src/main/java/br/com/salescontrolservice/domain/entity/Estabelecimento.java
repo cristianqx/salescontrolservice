@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import br.com.salescontrolservice.enumeration.StatusEnum;
+
 @Entity
 @Table(name="estabelecimento")
 public class Estabelecimento implements Serializable { 
@@ -27,6 +29,8 @@ public class Estabelecimento implements Serializable {
 	@Column(name = "nome_estabelecimento")
 	private String nome;
 
+	@NotNull
+	private StatusEnum status;
 	
 	public Integer getId() {
 		return id;
@@ -43,4 +47,13 @@ public class Estabelecimento implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public StatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusEnum status) {
+		this.status = status;
+	}
+	
 }
