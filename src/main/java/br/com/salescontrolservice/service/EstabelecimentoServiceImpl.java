@@ -11,6 +11,7 @@ import br.com.salescontrolservice.domain.entity.Estabelecimento;
 import br.com.salescontrolservice.enumeration.StatusEnum;
 import br.com.salescontrolservice.exception.BusinessException;
 import br.com.salescontrolservice.exception.EstabelecimentoExistsException;
+import br.com.salescontrolservice.exception.EstabelecimentoNotFoundException;
 import br.com.salescontrolservice.repository.EstabelecimentoRepository;
 
 @Service
@@ -44,8 +45,9 @@ public class EstabelecimentoServiceImpl extends AbstractService implements Estab
 
 	@Override
 	public void deleteEstabelecimento(@Valid Integer id) throws BusinessException {
-		// TODO Auto-generated method stub
-		
+		Estabelecimento entity = estabelecimentoRepository.findById(id).orElseThrow(EstabelecimentoNotFoundException::new);
+		entity.setStatus(StatusEnum.EXCLUIDO);
+		estabelecimentoRepository.save(entity);
 	}
 
 	@Override
