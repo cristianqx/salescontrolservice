@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.salescontrolservice.domain.dto.UsuarioDto;
@@ -23,6 +24,9 @@ public class UsuarioServiceImpl extends AbstractService implements UsuarioServic
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private PasswordEncoder bcryptEncoder;
 
 	@Override
 	public void cadastrarUsuario(@Valid UsuarioDto usuario) throws BusinessException {
@@ -68,6 +72,7 @@ public class UsuarioServiceImpl extends AbstractService implements UsuarioServic
 	private void prepareCreate(final Usuario entity) {
 		entity.setNome(capitalize(entity.getNome()));
 		entity.setStatus(StatusEnum.ATIVO);
+		entity.setSenha(bcryptEncoder.encode(entity.getSenha()));
 	}
 	
 	private void validateCreate(final UsuarioDto usuario) throws BusinessException {

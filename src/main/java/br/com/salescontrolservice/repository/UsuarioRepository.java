@@ -11,5 +11,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	boolean existsUsuarioByEmail(final String email);
 	
 	Iterable<Usuario> findAllByOrderByIdDesc();
+	
+	Usuario findByEmail(String email);
 }
 

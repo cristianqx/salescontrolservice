@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
+import br.com.salescontrolservice.config.security.JwtUserDetailsService;
 import br.com.salescontrolservice.domain.dto.UsuarioDto;
 import br.com.salescontrolservice.exception.BusinessException;
 import br.com.salescontrolservice.service.UsuarioService;
@@ -28,7 +30,7 @@ public class UsuarioControllerImpl extends AbstractController {
 	
     @Autowired
     private UsuarioService usuarioService;
-    
+        
     @ApiOperation(value = "Cadastra um usuário")
 	@PostMapping(consumes = { "application/json" },  produces = { "application/json" })
 	@ResponseStatus(HttpStatus.CREATED)
