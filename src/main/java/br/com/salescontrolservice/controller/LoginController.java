@@ -1,5 +1,7 @@
 package br.com.salescontrolservice.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,14 @@ import br.com.salescontrolservice.config.security.JwtUserDetailsService;
 import br.com.salescontrolservice.domain.dto.LoginRequestDto;
 import br.com.salescontrolservice.domain.dto.LoginResponseDto;
 import br.com.salescontrolservice.domain.dto.UsuarioDto;
+import br.com.salescontrolservice.domain.entity.Usuario;
+import br.com.salescontrolservice.exception.UsuarioNotFoundException;
+import br.com.salescontrolservice.repository.UsuarioRepository;
 
 
 @RestController
-@CrossOrigin
-public class LoginController {
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class LoginController extends AbstractController{
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -34,18 +39,33 @@ public class LoginController {
 
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
+	
+	@Autowired
+	private UsuarioRepository repository;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequestDto authenticationRequest) throws Exception {
+		
+		UsuarioDto usuario = convertToDTO(repository.findByEmail(authenticationRequest.getEmail()), UsuarioDto.class);
+		Map<Object, Object> model = new HashMap<>();
+		
+		if(Objects.nonNull(usuario)) {
+			authenticate(authenticationRequest.getEmail(), authenticationRequest.getSenha());
+			final UserDetails userDetails = userDetailsService
+					.loadUserByUsername(authenticationRequest.getEmail());
 
-		authenticate(authenticationRequest.getEmail(), authenticationRequest.getSenha());
-
-		final UserDetails userDetails = userDetailsService
-				.loadUserByUsername(authenticationRequest.getEmail());
-
-		final String token = jwtTokenUtil.generateToken(userDetails);
-
-		return ResponseEntity.ok(new LoginResponseDto(token));
+			final String token = jwtTokenUtil.generateToken(userDetails);
+			model.put("token", token);
+			model.put("id", usuario.getId());
+			model.put("nome", usuario.getNome());
+			model.put("email", usuario.getEmail());
+			model.put("estabelecimento", usuario.getEstabelecimento().getId());
+			model.put("tipoUsuario", usuario.getPerfil().getId());
+		} else {
+			throw new UsuarioNotFoundException();
+		}
+		
+		return ResponseEntity.ok(model);
 	}
 
 	private void authenticate(String email, String senha) throws Exception {
@@ -54,7 +74,7 @@ public class LoginController {
 		} catch (DisabledException e) {
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
-			throw new Exception("INVALID_CREDENTIALS", e);
+			throw new UsuarioNotFoundException();
 		}
 	}
 }

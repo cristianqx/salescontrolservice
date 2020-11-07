@@ -54,7 +54,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 			UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
 
-
 			// se o token for válido, aqui configura o Spring Security para definir manualmente
 			// a autenticação
 			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
@@ -71,5 +70,4 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		}
 		chain.doFilter(request, response);
 	}
-
 }
