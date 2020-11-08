@@ -1,12 +1,14 @@
 package br.com.salescontrolservice.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import br.com.salescontrolservice.domain.converter.StatusConverter;
+import br.com.salescontrolservice.enumeration.StatusEnum;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pedido")
@@ -14,52 +16,102 @@ public class Pedido extends AbstractEntity<Integer> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "data_pedido")
-    @Temporal(TemporalType.DATE)
-    private Date dataPedido;
+	@Column(name = "status")
+	@Convert(converter = StatusConverter.class)
+	private StatusEnum status;
+	
+	@OneToOne
+	private Estabelecimento estabelecimento;
+	
+	@OneToMany(mappedBy="id.pedido")
+	private Set<ItemPedido> itens = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
-    @JsonBackReference
-    private Collection<ItemPedido> itemPedidoCollection;
+	@Column(updatable = false, insertable = false)
+	private LocalDateTime dataVenda;
 
-    public Date getDataPedido() {
-        return dataPedido;
-    }
-
-    public void setDataPedido(Date dataPedido) {
-        this.dataPedido = dataPedido;
-    }
-
-    public Collection<ItemPedido> getItemPedidoCollection() {
-		return itemPedidoCollection;
+	@OneToOne
+	private Usuario usuarioLogado;
+	
+	public Usuario getUsuarioLogado() {
+		return usuarioLogado;
 	}
 
-	public void setItemPedidoCollection(Collection<ItemPedido> itemPedidoCollection) {
-		this.itemPedidoCollection = itemPedidoCollection;
+	public void setUsuarioLogado(Usuario usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
+	}
+
+	public StatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusEnum status) {
+		this.status = status;
+	}
+
+	public Estabelecimento getEstabelecimento() {
+		return estabelecimento;
+	}
+
+	public void setEstabelecimento(Estabelecimento estabelecimento) {
+		this.estabelecimento = estabelecimento;
+	}
+
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+
+	public LocalDateTime getDataVenda() {
+		return dataVenda;
+	}
+
+	public void setDataVenda(LocalDateTime dataVenda) {
+		this.dataVenda = dataVenda;
 	}
 
 	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Pedido)) return false;
-        Pedido pedido = (Pedido) o;
-        return Objects.equals(getId(), pedido.getId()) &&
-                Objects.equals(getDataPedido(), pedido.getDataPedido());
-    }
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dataVenda == null) ? 0 : dataVenda.hashCode());
+		result = prime * result + ((estabelecimento == null) ? 0 : estabelecimento.hashCode());
+		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(getId(), getDataPedido());
-    }
-
-    @Override
-    public String toString() {
-        return "Pedido{" +
-                "id=" + id +
-                ", dataPedido=" + dataPedido +
-                ", itemDoPedidoCollection=" + itemPedidoCollection +
-                ", cliente=" +
-                '}';
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pedido other = (Pedido) obj;
+		if (dataVenda == null) {
+			if (other.dataVenda != null)
+				return false;
+		} else if (!dataVenda.equals(other.dataVenda))
+			return false;
+		if (estabelecimento == null) {
+			if (other.estabelecimento != null)
+				return false;
+		} else if (!estabelecimento.equals(other.estabelecimento))
+			return false;
+		if (itens == null) {
+			if (other.itens != null)
+				return false;
+		} else if (!itens.equals(other.itens))
+			return false;
+		if (status != other.status)
+			return false;
+		return true;
+	}
+	
+	
+	
 }

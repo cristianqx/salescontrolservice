@@ -59,7 +59,11 @@ public class LoginController extends AbstractController{
 			model.put("id", usuario.getId());
 			model.put("nome", usuario.getNome());
 			model.put("email", usuario.getEmail());
-			model.put("estabelecimento", usuario.getEstabelecimento().getId());
+			
+			if(Objects.nonNull(usuario.getEstabelecimento())) {
+				model.put("estabelecimento", usuario.getEstabelecimento().getId());
+			}
+			
 			model.put("tipoUsuario", usuario.getPerfil().getId());
 		} else {
 			throw new UsuarioNotFoundException();
@@ -76,5 +80,6 @@ public class LoginController extends AbstractController{
 		} catch (BadCredentialsException e) {
 			throw new UsuarioNotFoundException();
 		}
+		
 	}
 }

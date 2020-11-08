@@ -1,10 +1,9 @@
 package br.com.salescontrolservice.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "item_pedido")
@@ -12,52 +11,49 @@ public class ItemPedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @EmbeddedId
-    private ItemPedidoPK itemPedidoPK;
+    @JsonIgnore
+	@EmbeddedId
+	private ItemPedidoPK id = new ItemPedidoPK();
 
-    @Column(name = "quantidade", length = 11)
-    private Integer quantidade;
-
-    @JoinColumn(name = "id_pedido", referencedColumnName = "id", insertable = false, updatable = false)
-    @JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Pedido pedido;
-
-    @JoinColumn(name = "id_produto", referencedColumnName = "id", insertable = false, updatable = false)
-    @JsonManagedReference
-    @ManyToOne(optional = false)
-    private Produto produto;
-
-    public ItemPedido(ItemPedidoPK itemPedidoPK) {
-        this.itemPedidoPK = itemPedidoPK;
-    }
-
-    public ItemPedido() {
-    }
-
-    public Pedido getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
-    }
-
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
-    
-    public ItemPedidoPK getItemPedidoPK() {
-		return itemPedidoPK;
+    private Double desconto;
+	private Integer quantidade;
+	private Double preco;
+	
+	public ItemPedido() {
 	}
 
-	public void setItemPedidoPK(ItemPedidoPK itemPedidoPK) {
-		this.itemPedidoPK = itemPedidoPK;
+	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
+		super();
+		id.setPedido(pedido);
+		id.setProduto(produto);
+		this.desconto = desconto;
+		this.quantidade = quantidade;
+		this.preco = preco;
+	}
+
+	@JsonIgnore
+	public Pedido getPedido() {
+		return id.getPedido();
+	}
+	
+	public Produto getProduto() {
+		return id.getProduto();
+	}
+	
+	public ItemPedidoPK getId() {
+		return id;
+	}
+
+	public void setId(ItemPedidoPK id) {
+		this.id = id;
+	}
+
+	public Double getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(Double desconto) {
+		this.desconto = desconto;
 	}
 
 	public Integer getQuantidade() {
@@ -68,28 +64,36 @@ public class ItemPedido implements Serializable {
 		this.quantidade = quantidade;
 	}
 
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
 	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ItemPedido)) return false;
-        ItemPedido that = (ItemPedido) o;
-        return Objects.equals(getItemPedidoPK(), that.getItemPedidoPK()) &&
-                Objects.equals(getQuantidade(), that.getQuantidade()) &&
-                Objects.equals(getPedido(), that.getPedido()) &&
-                Objects.equals(getProduto(), that.getProduto());
-    }
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getItemPedidoPK(), getQuantidade(), getPedido(), getProduto());
-    }
-
-    @Override
-    public String toString() {
-        return "ItemDoPedido{" +
-                "itemDoPedidoPK=" + itemPedidoPK +
-                ", qtdade='" + getQuantidade() + '\'' +
-                ", produto=" + produto +
-                '}';
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ItemPedido other = (ItemPedido) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 }

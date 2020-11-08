@@ -1,6 +1,6 @@
 package br.com.salescontrolservice.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.salescontrolservice.domain.converter.StatusConverter;
 import br.com.salescontrolservice.enumeration.StatusEnum;
@@ -11,7 +11,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "produto")
@@ -35,13 +38,33 @@ public class Produto implements Serializable {
 	@Convert(converter = StatusConverter.class)
 	private StatusEnum status;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "produto")
-    @JsonBackReference
-    private Collection<ItemPedido> itemDoPedidoCollection;
-    
     @ManyToOne
     private Estabelecimento estabelecimento;
     
+	@JsonIgnore
+	@OneToMany(mappedBy="id.produto")
+	private Set<ItemPedido> itens = new HashSet<>();
+	
+	
+	public Produto() {
+	}
+
+	public Produto(Integer id, String descricao, Double valor) {
+		super();
+		this.id = id;
+		this.descricao = descricao;
+		this.valor = valor;
+	}
+    
+	@JsonIgnore
+	public List<Pedido> getPedidos() {
+		List<Pedido> lista = new ArrayList<>();
+		for (ItemPedido x : itens) {
+			lista.add(x.getPedido());
+		}
+		return lista;
+	}
+	
     public Integer getId() {
         return id;
     }
@@ -50,20 +73,21 @@ public class Produto implements Serializable {
         this.id = id;
     }
 
-    public String getDescricao() {
+    
+    public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+
+	public String getDescricao() {
         return descricao;
     }
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public Collection<ItemPedido> getItemDoPedidoCollection() {
-        return itemDoPedidoCollection;
-    }
-
-    public void setItemDoPedidoCollection(Collection<ItemPedido> itemDoPedidoCollection) {
-        this.itemDoPedidoCollection = itemDoPedidoCollection;
     }
 
     public StatusEnum getStatus() {

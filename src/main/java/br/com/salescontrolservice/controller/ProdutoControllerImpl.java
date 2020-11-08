@@ -53,7 +53,7 @@ public class ProdutoControllerImpl extends AbstractController {
 		return produtoService.findById(id);	
 	}
 	
-    @ApiOperation(value = "Deleta um um produto")
+    @ApiOperation(value = "Deleta um produto")
 	@DeleteMapping(value = "{id}", consumes = { "application/json" },  produces = { "application/json" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Integer id) throws BusinessException {
