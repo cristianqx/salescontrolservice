@@ -1,8 +1,9 @@
 package br.com.salescontrolservice.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -14,31 +15,27 @@ import org.springframework.util.CollectionUtils;
 
 import br.com.salescontrolservice.domain.dto.ItemPedidoDTO;
 import br.com.salescontrolservice.domain.dto.PedidoDTO;
-import br.com.salescontrolservice.domain.dto.UsuarioDto;
 import br.com.salescontrolservice.domain.entity.Estabelecimento;
 import br.com.salescontrolservice.domain.entity.ItemPedido;
 import br.com.salescontrolservice.domain.entity.Pedido;
-import br.com.salescontrolservice.domain.entity.Produto;
 import br.com.salescontrolservice.domain.entity.Usuario;
+import br.com.salescontrolservice.enumeration.StatusEnum;
 import br.com.salescontrolservice.exception.BusinessException;
 import br.com.salescontrolservice.exception.EstabelecimentoNotFoundException;
 import br.com.salescontrolservice.exception.ProdutoNotFoundException;
-import br.com.salescontrolservice.exception.UsuarioExistsException;
 import br.com.salescontrolservice.exception.UsuarioNotFoundException;
 import br.com.salescontrolservice.repository.EstabelecimentoRepository;
 import br.com.salescontrolservice.repository.ItemPedidoRepository;
 import br.com.salescontrolservice.repository.PedidoRepository;
-import br.com.salescontrolservice.repository.ProdutoRepository;import br.com.salescontrolservice.repository.UsuarioRepository;
+import br.com.salescontrolservice.repository.ProdutoRepository;
+import br.com.salescontrolservice.repository.UsuarioRepository;
 
 @Service
 public class PedidoServiceImpl extends AbstractService implements PedidoService{
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
-	@Autowired
-	private PedidoRepository pedidoServiceImpl;
-	
+		
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 	
@@ -57,14 +54,19 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
 	@Override
 	@Transactional(rollbackFor=BusinessException.class)
 	public void cadastrarPedido(@Valid final PedidoDTO pedidoDTO) throws BusinessException {
-		Pedido pedido = modelMapper.map(pedidoDTO, Pedido.class);
+		Pedido pedido = modelMapper.map(pedidoDTO, Pedido.class);		
+		prepare(pedido);
 		validate(pedido);
 		validateEstabelecimento(pedido.getEstabelecimento());
 		validateUsuario(pedido.getUsuarioLogado());
 		validateProduto(pedidoDTO.getItens(), pedido.getEstabelecimento().getId());
+		pedidoRepository.save(pedido);
+		List<ItemPedido> itensPedido = prepareItensPedido(pedido, pedidoDTO.getItens()
+				  .stream()
+				  .map(user -> modelMapper.map(user, ItemPedido.class))
+				  .collect(Collectors.toList()));
 		
-		//falta salvar primeiro o pedido pra depois salvar o itemPedido, pois ele pede o id
-		saveItemPedido(pedido.getItens());
+		saveItemPedido(itensPedido);
 	}
 
 	@Override
@@ -85,7 +87,7 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
 		return null;
 	}
 	
-    private void saveItemPedido(final Set<ItemPedido> itens) {
+    private void saveItemPedido(final List<ItemPedido> itens) {
     	itemPedidoRepository.saveAll(itens);
     }
 
@@ -94,6 +96,24 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
     
     }
 
+    private void prepare(Pedido pedido) {
+    	pedido.setStatus(StatusEnum.ATIVO);
+    }
+    
+    private List<ItemPedido> prepareItensPedido(Pedido pedido, List<ItemPedido> itens) {    
+		List<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
+
+    	if(!CollectionUtils.isEmpty(itens)) {
+    		itens.forEach(item -> {
+    			item = new ItemPedido(pedido, item.getProduto(), null, item.getQuantidade(), item.getPreco());
+    			itensPedido.add(item);
+    		});
+    	}
+    
+		return itensPedido;
+    }
+    
+    
     private void validateProduto(List<ItemPedidoDTO> itemPedido, final Integer idEstabelecimento) throws BusinessException {
     	for(ItemPedidoDTO item : itemPedido) {
         	if(Objects.nonNull(item.getProduto().getDescricao())) {

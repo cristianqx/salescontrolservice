@@ -13,6 +13,7 @@ public class ItemPedidoDTO implements Serializable {
 	private Integer quantidade;
 	private Pedido pedido;
 	private Produto produto;
+	private Double preco;
 
 	public Integer getId() {
 		return id;
@@ -45,4 +46,13 @@ public class ItemPedidoDTO implements Serializable {
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+	
 }
