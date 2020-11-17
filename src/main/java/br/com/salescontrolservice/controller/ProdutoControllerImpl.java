@@ -53,6 +53,13 @@ public class ProdutoControllerImpl extends AbstractController {
 		return produtoService.findById(id);	
 	}
 	
+    @ApiOperation(value = "Retorna dados de um produto pela descricao")
+	@GetMapping(value = "{estabelecimentoId}/{descricao}")
+	@ResponseStatus(HttpStatus.OK)
+	public Iterable<Produto> findByDescricao(@PathVariable final Integer estabelecimentoId, @PathVariable final String descricao) throws BusinessException {
+		return produtoService.findByDescricao(estabelecimentoId, descricao);	
+	}
+    
     @ApiOperation(value = "Deleta um produto")
 	@DeleteMapping(value = "{id}", consumes = { "application/json" },  produces = { "application/json" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)

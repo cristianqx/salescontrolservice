@@ -16,5 +16,7 @@ public interface ProdutoService {
 	
 	Produto findById(final Integer id) throws BusinessException;
 	
+	Iterable<Produto> findByDescricao(final Integer estabelecimentoId, final String descricao) throws BusinessException;
+	
 	Iterable<Produto> findAll(final Integer idEstabelecimento);
 }

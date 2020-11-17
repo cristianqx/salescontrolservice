@@ -47,6 +47,12 @@ public class ProdutoServiceImpl extends AbstractService implements ProdutoServic
 		return produtoRepository.findById(id).orElseThrow(ProdutoNotFoundException::new);
 	}
 
+
+	@Override
+	public Iterable<Produto> findByDescricao(Integer estabelecimentoId, String descricao) throws BusinessException {
+		return produtoRepository.findByEstabelecimentoIdAndDescricao(estabelecimentoId, descricao);
+	}
+	
 	@Override
 	@Transactional
 	public void atualizarProduto(@Valid ProdutoDto dto, @Valid Integer id) throws BusinessException {
@@ -96,4 +102,5 @@ public class ProdutoServiceImpl extends AbstractService implements ProdutoServic
 			}
 		}
 	}
+
 }
