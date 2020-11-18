@@ -4,6 +4,7 @@ import br.com.salescontrolservice.domain.converter.StatusConverter;
 import br.com.salescontrolservice.enumeration.StatusEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,18 +19,23 @@ public class Pedido extends AbstractEntity<Integer> implements Serializable {
 
 	@Column(name = "status")
 	@Convert(converter = StatusConverter.class)
+	@NotNull
 	private StatusEnum status;
 	
 	@OneToOne
+	@NotNull
 	private Estabelecimento estabelecimento;
 	
 	@OneToMany(mappedBy="id.pedido")
+	@NotNull
 	private Set<ItemPedido> itens = new HashSet<>();
 
-	@Column(updatable = false, insertable = false)
+	@Column(name = "data_venda")
+	@NotNull
 	private LocalDateTime dataVenda;
 
 	@OneToOne
+	@NotNull
 	private Usuario usuarioLogado;
 	
 	public Usuario getUsuarioLogado() {
