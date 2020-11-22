@@ -22,6 +22,7 @@ import br.com.salescontrolservice.domain.entity.Usuario;
 import br.com.salescontrolservice.enumeration.StatusEnum;
 import br.com.salescontrolservice.exception.BusinessException;
 import br.com.salescontrolservice.exception.EstabelecimentoNotFoundException;
+import br.com.salescontrolservice.exception.ProdutoNaoInformadoException;
 import br.com.salescontrolservice.exception.ProdutoNotFoundException;
 import br.com.salescontrolservice.exception.UsuarioNotFoundException;
 import br.com.salescontrolservice.repository.EstabelecimentoRepository;
@@ -57,8 +58,6 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
 		Pedido pedido = modelMapper.map(pedidoDTO, Pedido.class);		
 		prepare(pedido);
 		validate(pedido);
-		validateEstabelecimento(pedido.getEstabelecimento());
-		validateUsuario(pedido.getUsuarioLogado());
 		validateProduto(pedidoDTO.getItens(), pedido.getEstabelecimento().getId());
 		pedidoRepository.save(pedido);
 		List<ItemPedido> itensPedido = prepareItensPedido(pedido, pedidoDTO.getItens()
@@ -92,7 +91,8 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
     }
 
     private void validate(final Pedido pedido) throws BusinessException {
-
+		validateEstabelecimento(pedido.getEstabelecimento());
+		validateUsuario(pedido.getUsuarioLogado());
     
     }
 
@@ -100,7 +100,7 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
     	pedido.setStatus(StatusEnum.ATIVO);
     }
     
-    private List<ItemPedido> prepareItensPedido(Pedido pedido, List<ItemPedido> itens) {    
+    private List<ItemPedido> prepareItensPedido(Pedido pedido, List<ItemPedido> itens) throws BusinessException {    
 		List<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
 
     	if(!CollectionUtils.isEmpty(itens)) {
@@ -108,6 +108,8 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
     			item = new ItemPedido(pedido, item.getProduto(), null, item.getQuantidade(), item.getPreco());
     			itensPedido.add(item);
     		});
+    	} else {
+    		throw new ProdutoNaoInformadoException();
     	}
     
 		return itensPedido;

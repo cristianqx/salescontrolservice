@@ -16,7 +16,12 @@ public class MensagemConstants {
 	 */
 	public static final String PRODUTO_NAO_ENCONTRADO = "O produto informado não foi encontrado.";
 	public static final String PRODUTO_JA_CADASTRADO = "Já existe um cadastro de produto para o estabelecimento informado.";
-	
+
+	/*
+	 * Pedido
+	 */
+	public static final String PRODUTO_NAO_INFORMADO = "É necessário inserir produtos antes de efetuar uma venda.";
+
 	/*
 	 * Estabelecimento
 	 */
