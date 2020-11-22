@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import br.com.salescontrolservice.domain.entity.Estabelecimento;
-import br.com.salescontrolservice.enumeration.StatusEnum;
-import br.com.salescontrolservice.util.DataUtil;
+import br.com.salescontrolservice.enumeration.StatusVendasEnum;
 
 public class PedidoDTO implements Serializable {
 
@@ -14,7 +12,7 @@ public class PedidoDTO implements Serializable {
 	
 	private Integer id;
 	private List<ItemPedidoDTO> itens;
-	private StatusEnum status;
+	private StatusVendasEnum status;
 	private EstabelecimentoDto estabelecimento;
 	private LocalDateTime dataVenda;
 	private UsuarioDto usuarioLogado;
@@ -22,7 +20,7 @@ public class PedidoDTO implements Serializable {
 	public PedidoDTO() {
 	}
 	
-	public PedidoDTO(StatusEnum status, EstabelecimentoDto estabelecimento, List<ItemPedidoDTO> itens, LocalDateTime dataVenda) {
+	public PedidoDTO(StatusVendasEnum status, EstabelecimentoDto estabelecimento, List<ItemPedidoDTO> itens, LocalDateTime dataVenda) {
 		super();
 		this.status = status;
 		this.estabelecimento = estabelecimento;
@@ -54,11 +52,11 @@ public class PedidoDTO implements Serializable {
 		this.itens = itens;
 	}
 
-	public StatusEnum getStatus() {
+	public StatusVendasEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusEnum status) {
+	public void setStatus(StatusVendasEnum status) {
 		this.status = status;
 	}
 

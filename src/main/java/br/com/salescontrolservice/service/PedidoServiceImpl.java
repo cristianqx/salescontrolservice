@@ -20,6 +20,7 @@ import br.com.salescontrolservice.domain.entity.ItemPedido;
 import br.com.salescontrolservice.domain.entity.Pedido;
 import br.com.salescontrolservice.domain.entity.Usuario;
 import br.com.salescontrolservice.enumeration.StatusEnum;
+import br.com.salescontrolservice.enumeration.StatusVendasEnum;
 import br.com.salescontrolservice.exception.BusinessException;
 import br.com.salescontrolservice.exception.EstabelecimentoNotFoundException;
 import br.com.salescontrolservice.exception.PedidoNotFoundException;
@@ -98,7 +99,7 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
     }
 
     private void prepare(Pedido pedido) {
-    	pedido.setStatus(StatusEnum.ATIVO);
+    	pedido.setStatus(StatusVendasEnum.FINALIZADA);
     }
     
     private List<ItemPedido> prepareItensPedido(Pedido pedido, List<ItemPedido> itens) throws BusinessException {    

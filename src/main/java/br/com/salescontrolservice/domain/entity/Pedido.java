@@ -1,7 +1,7 @@
 package br.com.salescontrolservice.domain.entity;
 
-import br.com.salescontrolservice.domain.converter.StatusConverter;
-import br.com.salescontrolservice.enumeration.StatusEnum;
+import br.com.salescontrolservice.domain.converter.StatusVendasConverter;
+import br.com.salescontrolservice.enumeration.StatusVendasEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,9 +18,9 @@ public class Pedido extends AbstractEntity<Integer> implements Serializable {
     private static final long serialVersionUID = 1L;
 
 	@Column(name = "status")
-	@Convert(converter = StatusConverter.class)
+	@Convert(converter = StatusVendasConverter.class)
 	@NotNull
-	private StatusEnum status;
+	private StatusVendasEnum status;
 	
 	@OneToOne
 	@NotNull
@@ -50,11 +50,11 @@ public class Pedido extends AbstractEntity<Integer> implements Serializable {
 		this.usuarioLogado = usuarioLogado;
 	}
 
-	public StatusEnum getStatus() {
+	public StatusVendasEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusEnum status) {
+	public void setStatus(StatusVendasEnum status) {
 		this.status = status;
 	}
 
