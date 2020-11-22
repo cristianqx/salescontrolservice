@@ -2,24 +2,40 @@ package br.com.salescontrolservice.domain.dto;
 
 import java.io.Serializable;
 
-import br.com.salescontrolservice.domain.entity.Pedido;
-import br.com.salescontrolservice.domain.entity.Produto;
+import javax.persistence.EmbeddedId;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ItemPedidoDTO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
+    @JsonIgnore
+	@EmbeddedId
+	private ItemPedidoPKDTO id;
+    
 	private Integer quantidade;
-	private Pedido pedido;
-	private Produto produto;
+	private PedidoDTO pedido;
+	private ProdutoDto produto;
 	private Double preco;
 
-	public Integer getId() {
+	public ItemPedidoDTO() {
+		
+	}
+	
+	public ItemPedidoDTO(PedidoDTO pedido, ProdutoDto produto, Integer quantidade, Double preco) {
+		super();
+		id.setPedido(pedido);
+		id.setProduto(produto);
+		this.quantidade = quantidade;
+		this.preco = preco;
+	}
+	
+	public ItemPedidoPKDTO getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(ItemPedidoPKDTO id) {
 		this.id = id;
 	}
 
@@ -31,19 +47,20 @@ public class ItemPedidoDTO implements Serializable {
 		this.quantidade = quantidade;
 	}
 	
-	public Pedido getPedido() {
+	@JsonIgnore
+	public PedidoDTO getPedido() {
 		return pedido;
 	}
 	
-	public void setPedido(Pedido pedido) {
+	public void setPedido(PedidoDTO pedido) {
 		this.pedido = pedido;
 	}
 	
-	public Produto getProduto() {
+	public ProdutoDto getProduto() {
 		return produto;
 	}
 	
-	public void setProduto(Produto produto) {
+	public void setProduto(ProdutoDto produto) {
 		this.produto = produto;
 	}
 

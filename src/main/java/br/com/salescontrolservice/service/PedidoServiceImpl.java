@@ -22,6 +22,7 @@ import br.com.salescontrolservice.domain.entity.Usuario;
 import br.com.salescontrolservice.enumeration.StatusEnum;
 import br.com.salescontrolservice.exception.BusinessException;
 import br.com.salescontrolservice.exception.EstabelecimentoNotFoundException;
+import br.com.salescontrolservice.exception.PedidoNotFoundException;
 import br.com.salescontrolservice.exception.ProdutoNaoInformadoException;
 import br.com.salescontrolservice.exception.ProdutoNotFoundException;
 import br.com.salescontrolservice.exception.UsuarioNotFoundException;
@@ -52,6 +53,7 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	
 	@Override
 	@Transactional(rollbackFor=BusinessException.class)
 	public void cadastrarPedido(@Valid final PedidoDTO pedidoDTO) throws BusinessException {
@@ -76,8 +78,7 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
 
 	@Override
 	public Pedido findById(Integer id) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		return pedidoRepository.findById(id).orElseThrow(PedidoNotFoundException::new);
 	}
 
 	@Override

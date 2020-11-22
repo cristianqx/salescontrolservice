@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.salescontrolservice.domain.dto.PedidoDTO;
+import br.com.salescontrolservice.domain.entity.Pedido;
 import br.com.salescontrolservice.exception.BusinessException;
 import br.com.salescontrolservice.service.PedidoService;
 import io.swagger.annotations.ApiOperation;
@@ -41,7 +42,7 @@ public class PedidoController extends AbstractController {
 	@GetMapping(value = "{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public PedidoDTO findById(@PathVariable final Integer id) throws BusinessException {
-		return convertToDTO(pedidoService.findById(id), PedidoDTO.class);	
+    	return convertToDTO(pedidoService.findById(id), PedidoDTO.class);	
 	}
     
     @ApiOperation(value = "Cancela um pedido")

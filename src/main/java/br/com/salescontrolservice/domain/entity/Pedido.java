@@ -38,6 +38,10 @@ public class Pedido extends AbstractEntity<Integer> implements Serializable {
 	@NotNull
 	private Usuario usuarioLogado;
 	
+	public Pedido() {
+		
+	}
+	
 	public Usuario getUsuarioLogado() {
 		return usuarioLogado;
 	}
@@ -78,46 +82,4 @@ public class Pedido extends AbstractEntity<Integer> implements Serializable {
 		this.dataVenda = dataVenda;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((dataVenda == null) ? 0 : dataVenda.hashCode());
-		result = prime * result + ((estabelecimento == null) ? 0 : estabelecimento.hashCode());
-		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Pedido other = (Pedido) obj;
-		if (dataVenda == null) {
-			if (other.dataVenda != null)
-				return false;
-		} else if (!dataVenda.equals(other.dataVenda))
-			return false;
-		if (estabelecimento == null) {
-			if (other.estabelecimento != null)
-				return false;
-		} else if (!estabelecimento.equals(other.estabelecimento))
-			return false;
-		if (itens == null) {
-			if (other.itens != null)
-				return false;
-		} else if (!itens.equals(other.itens))
-			return false;
-		if (status != other.status)
-			return false;
-		return true;
-	}
-	
-	
-	
 }

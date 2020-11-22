@@ -20,7 +20,8 @@ public class MensagemConstants {
 	/*
 	 * Pedido
 	 */
-	public static final String PRODUTO_NAO_INFORMADO = "É necessário inserir produtos antes de efetuar uma venda.";
+	public static final String PEDIDO_NAO_ENCONTRADO = "O pedido informado não foi encontrado.";
+	public static final String PEDIDO_PRODUTO_NAO_INFORMADO = "É necessário inserir produtos antes de efetuar uma venda.";
 
 	/*
 	 * Estabelecimento

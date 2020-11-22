@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import br.com.salescontrolservice.constant.MensagemConstants;
 
-@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = MensagemConstants.PEDIDO_PRODUTO_NAO_INFORMADO)
-public class ProdutoNaoInformadoException extends BusinessException{
+@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = MensagemConstants.PEDIDO_NAO_ENCONTRADO)
+public class PedidoNotFoundException extends BusinessException{
 
 	private static final long serialVersionUID = 1L;
 	
-	public ProdutoNaoInformadoException() {
-		super(MensagemConstants.PEDIDO_PRODUTO_NAO_INFORMADO);
+	public PedidoNotFoundException() {
+		super(MensagemConstants.PEDIDO_NAO_ENCONTRADO);
 	}
 
 }
