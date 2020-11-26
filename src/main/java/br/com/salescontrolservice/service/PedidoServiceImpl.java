@@ -73,7 +73,12 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
 
 	@Override
 	public void cancelarPedido(@Valid Integer id) throws BusinessException {
-		// TODO Auto-generated method stub
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(PedidoNotFoundException::new);
+		
+		if(Objects.nonNull(pedido) && Objects.nonNull(pedido.getId())) {
+			pedido.setStatus(StatusVendasEnum.CANCELADA);
+			pedidoRepository.save(pedido);
+		}
 		
 	}
 
