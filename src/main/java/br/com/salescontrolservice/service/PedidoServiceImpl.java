@@ -3,7 +3,7 @@ package br.com.salescontrolservice.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -18,8 +18,8 @@ import br.com.salescontrolservice.domain.dto.PedidoDTO;
 import br.com.salescontrolservice.domain.entity.Estabelecimento;
 import br.com.salescontrolservice.domain.entity.ItemPedido;
 import br.com.salescontrolservice.domain.entity.Pedido;
+import br.com.salescontrolservice.domain.entity.Produto;
 import br.com.salescontrolservice.domain.entity.Usuario;
-import br.com.salescontrolservice.enumeration.StatusEnum;
 import br.com.salescontrolservice.enumeration.StatusVendasEnum;
 import br.com.salescontrolservice.exception.BusinessException;
 import br.com.salescontrolservice.exception.EstabelecimentoNotFoundException;
@@ -61,14 +61,29 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
 		Pedido pedido = modelMapper.map(pedidoDTO, Pedido.class);		
 		prepare(pedido);
 		validate(pedido);
-		validateProduto(pedidoDTO.getItens(), pedido.getEstabelecimento().getId());
 		pedidoRepository.save(pedido);
-		List<ItemPedido> itensPedido = prepareItensPedido(pedido, pedidoDTO.getItens()
-				  .stream()
-				  .map(user -> modelMapper.map(user, ItemPedido.class))
-				  .collect(Collectors.toList()));
-		
+		List<ItemPedido> itensPedido = prepareItens(pedido, pedidoDTO.getItens());
+		validateProduto(itensPedido, pedido.getEstabelecimento().getId());
 		saveItemPedido(itensPedido);
+	}
+
+	private List<ItemPedido> prepareItens(Pedido pedido, Set<ItemPedidoDTO> itens) throws BusinessException {
+		List<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
+		
+		if(!CollectionUtils.isEmpty(itens)) {
+			itens.forEach(item -> {
+				if(Objects.nonNull(item) && Objects.nonNull(item.getProduto()) &&  Objects.nonNull(item.getProduto())) {
+					ItemPedido itemPedido = new ItemPedido();
+					itemPedido.setProduto(modelMapper.map(item.getProduto(), Produto.class));
+					itemPedido.setPedido(modelMapper.map(pedido, Pedido.class));
+					itemPedido.setQuantidade(item.getQuantidade());
+					itemPedido.setPreco(item.getPreco());
+					itensPedido.add(itemPedido);
+				}
+			});
+		}
+		
+		return itensPedido;
 	}
 
 	@Override
@@ -88,9 +103,8 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
 	}
 
 	@Override
-	public Iterable<Pedido> findAll(Integer idEstabelecimento) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterable<Pedido> findAll(Integer estabelecimentoId) {
+		return pedidoRepository.findAllByEstabelecimentoId(estabelecimentoId);
 	}
 	
     private void saveItemPedido(final List<ItemPedido> itens) {
@@ -107,28 +121,14 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
     	pedido.setStatus(StatusVendasEnum.FINALIZADA);
     }
     
-    private List<ItemPedido> prepareItensPedido(Pedido pedido, List<ItemPedido> itens) throws BusinessException {    
-		List<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
-
-    	if(!CollectionUtils.isEmpty(itens)) {
-    		itens.forEach(item -> {
-    			item = new ItemPedido(pedido, item.getProduto(), null, item.getQuantidade(), item.getPreco());
-    			itensPedido.add(item);
-    		});
-    	} else {
-    		throw new ProdutoNaoInformadoException();
-    	}
-    
-		return itensPedido;
-    }
-    
-    
-    private void validateProduto(List<ItemPedidoDTO> itemPedido, final Integer idEstabelecimento) throws BusinessException {
-    	for(ItemPedidoDTO item : itemPedido) {
-        	if(Objects.nonNull(item.getProduto().getDescricao())) {
+    private void validateProduto(List<ItemPedido> itemPedido, final Integer idEstabelecimento) throws BusinessException {
+    	for(ItemPedido item : itemPedido) {
+        	if(Objects.nonNull(item.getProduto()) && Objects.nonNull(item.getProduto().getDescricao()) && Objects.nonNull(idEstabelecimento)) {
         		if(!produtoRepository.existsProdutoByDescricaoAndEstabelecimentoId(item.getProduto().getDescricao(), idEstabelecimento)) {
         			throw new ProdutoNotFoundException();
         		}
+        	} else {
+        		throw new ProdutoNaoInformadoException();
         	}
 
     	}

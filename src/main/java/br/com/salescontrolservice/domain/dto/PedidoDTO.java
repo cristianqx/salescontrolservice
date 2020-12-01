@@ -2,7 +2,7 @@ package br.com.salescontrolservice.domain.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 import br.com.salescontrolservice.enumeration.StatusVendasEnum;
 
@@ -11,7 +11,7 @@ public class PedidoDTO implements Serializable {
 	private static final long serialVersionUID = 3846314520598617471L;
 	
 	private Integer id;
-	private List<ItemPedidoDTO> itens;
+	private Set<ItemPedidoDTO> itens;
 	private StatusVendasEnum status;
 	private EstabelecimentoDto estabelecimento;
 	private LocalDateTime dataVenda;
@@ -20,7 +20,7 @@ public class PedidoDTO implements Serializable {
 	public PedidoDTO() {
 	}
 	
-	public PedidoDTO(StatusVendasEnum status, EstabelecimentoDto estabelecimento, List<ItemPedidoDTO> itens, LocalDateTime dataVenda) {
+	public PedidoDTO(StatusVendasEnum status, EstabelecimentoDto estabelecimento, Set<ItemPedidoDTO> itens, LocalDateTime dataVenda) {
 		super();
 		this.status = status;
 		this.estabelecimento = estabelecimento;
@@ -44,11 +44,11 @@ public class PedidoDTO implements Serializable {
 		this.usuarioLogado = usuarioLogado;
 	}
 
-	public List<ItemPedidoDTO> getItens() {
+	public Set<ItemPedidoDTO> getItens() {
 		return itens;
 	}
 
-	public void setItens(List<ItemPedidoDTO> itens) {
+	public void setItens(Set<ItemPedidoDTO> itens) {
 		this.itens = itens;
 	}
 
