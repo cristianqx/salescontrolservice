@@ -11,7 +11,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
 	Iterable<Pedido> findAllByOrderByIdDesc();
 
-	Iterable<Pedido> findAllByEstabelecimentoId(Integer estabelecimentoId);
+	Iterable<Pedido> findAllByEstabelecimentoIdOrderByIdDesc(Integer estabelecimentoId);
 	
 }
 

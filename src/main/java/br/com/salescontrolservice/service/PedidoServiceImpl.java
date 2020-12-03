@@ -104,7 +104,7 @@ public class PedidoServiceImpl extends AbstractService implements PedidoService{
 
 	@Override
 	public Iterable<Pedido> findAll(Integer estabelecimentoId) {
-		return pedidoRepository.findAllByEstabelecimentoId(estabelecimentoId);
+		return pedidoRepository.findAllByEstabelecimentoIdOrderByIdDesc(estabelecimentoId);
 	}
 	
     private void saveItemPedido(final List<ItemPedido> itens) {
