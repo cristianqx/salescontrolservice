@@ -38,6 +38,8 @@ public class Pedido extends AbstractEntity<Integer> implements Serializable {
 	@NotNull
 	private Usuario usuarioLogado;
 	
+	private Double valorTotal;
+	
 	public Pedido() {
 		
 	}
@@ -82,4 +84,12 @@ public class Pedido extends AbstractEntity<Integer> implements Serializable {
 		this.dataVenda = dataVenda;
 	}
 
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+	
 }

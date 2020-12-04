@@ -16,6 +16,7 @@ public class PedidoDTO implements Serializable {
 	private EstabelecimentoDto estabelecimento;
 	private LocalDateTime dataVenda;
 	private UsuarioDto usuarioLogado;
+	private Double valorTotal;
 
 	public PedidoDTO() {
 	}
@@ -74,6 +75,14 @@ public class PedidoDTO implements Serializable {
 
 	public void setDataVenda(LocalDateTime dataVenda) {
 		this.dataVenda = dataVenda;
+	}
+
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 
 	@Override
