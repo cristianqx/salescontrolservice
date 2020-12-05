@@ -2,9 +2,11 @@ package br.com.salescontrolservice.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.salescontrolservice.constant.WhereStatusConstants;
 import br.com.salescontrolservice.domain.converter.StatusConverter;
 import br.com.salescontrolservice.enumeration.StatusEnum;
 
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -18,6 +20,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "produto")
+@Where(clause = WhereStatusConstants.NOT_EQUALS_EXCLUIDO)
 public class Produto implements Serializable {
 
     private static final long serialVersionUID = 1L;

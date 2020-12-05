@@ -2,6 +2,9 @@ package br.com.salescontrolservice.domain.dto;
 
 import java.util.List;
 
+import javax.persistence.Convert;
+
+import br.com.salescontrolservice.domain.converter.StatusConverter;
 import br.com.salescontrolservice.domain.entity.Estabelecimento;
 import br.com.salescontrolservice.enumeration.StatusEnum;
 
@@ -10,7 +13,10 @@ public class ProdutoDto {
 	private Integer id;
 	private String descricao;
 	private Double valor;
+	
+	//@Convert(converter = StatusConverter.class)
 	private StatusEnum status;
+	
     private List<Estabelecimento> estabelecimento;
 
 	
